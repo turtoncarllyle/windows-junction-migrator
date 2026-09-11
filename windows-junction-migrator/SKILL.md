@@ -19,28 +19,28 @@ On Windows 10/11, move large application caches or user data from C: to another 
 
 ## 脚本入口 / Script entry point
 
-从技能目录运行 `scripts/migrate-junctions.ps1`。`-UserRoot` 默认是 `$env:USERPROFILE`，`-TargetRoot` 默认是 `E:\`。目标映射以 `-TargetRoot` 为根，绝对目标路径也可用于自定义映射。
+从技能目录运行 `scripts/migrate-junctions.ps1`。`-UserRoot` 默认是 `$env:USERPROFILE`，`-TargetRoot` 默认是 `E:\`。目标映射以 `-TargetRoot` 为根，绝对目标路径也可用于自定义映射。PowerShell 脚本保存为带 BOM 的 UTF-8，以兼容 Windows PowerShell 5.1。
 
 ```powershell
 # 预览全部常用软件
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview -Preset common -TargetRoot "E:\"
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview -Preset common -TargetRoot "E:\"
 
 # 只迁移指定软件（执行前必须确认并关闭软件）
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Apply `
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Apply `
   -Software edge,chrome,codex -TargetRoot "E:\" -ConfirmApply
 
 # 指定一个目录；先预览，再把同一参数改为 Apply
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview `
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview `
   -Source "C:\Users\flze\SomeApp\Data" -Target "E:\SomeApp\Data"
 
 # 用自定义 JSON 批量迁移
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview `
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview `
   -MappingFile ".\my-mappings.json" -TargetRoot "E:\"
 
 # 验证、删除链接（保留目标数据）或恢复
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Verify -Software edge,chrome
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode RemoveLink -Software edge -ConfirmApply
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Restore -Software edge -ConfirmApply
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Verify -Software edge,chrome
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode RemoveLink -Software edge -ConfirmApply
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Restore -Software edge -ConfirmApply
 ```
 
 支持的参数：
@@ -65,7 +65,7 @@ $idea = Get-ChildItem "$env:LOCALAPPDATA\JetBrains" -Directory |
   Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $source = Join-Path $idea.FullName "caches"
 $target = "E:\intellij-idea\caches"
-pwsh -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview -Source $source -Target $target
+powershell.exe -NoProfile -File .\scripts\migrate-junctions.ps1 -Mode Preview -Source $source -Target $target
 ```
 
 如果找到多个版本，应先明确选择一个目录；不要让脚本猜测要迁移的版本。

@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 
 if ($env:OS -ne 'Windows_NT') {
     throw 'These tests require Windows.'
@@ -6,7 +6,10 @@ if ($env:OS -ne 'Windows_NT') {
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $scriptPath = Join-Path $repoRoot 'windows-junction-migrator\scripts\migrate-junctions.ps1'
-$shell = (Get-Command pwsh -ErrorAction SilentlyContinue).Source
+$shell = $env:WJM_TEST_SHELL
+if (-not $shell) {
+    $shell = (Get-Command pwsh -ErrorAction SilentlyContinue).Source
+}
 if (-not $shell) {
     $shell = (Get-Command powershell -ErrorAction Stop).Source
 }
@@ -20,8 +23,15 @@ function Invoke-Migration {
         [int]$ExpectedExitCode = 0
     )
 
-    $output = & $shell -NoProfile -File $scriptPath @Arguments 2>&1
-    $exitCode = $LASTEXITCODE
+    $previousErrorAction = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $output = & $shell -NoProfile -File $scriptPath @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorAction
+    }
     if ($exitCode -ne $ExpectedExitCode) {
         throw "Unexpected exit code $exitCode (expected $ExpectedExitCode): $($output -join [Environment]::NewLine)"
     }

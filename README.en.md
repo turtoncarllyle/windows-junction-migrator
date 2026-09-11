@@ -53,18 +53,18 @@ The script can also be run directly from PowerShell. The default source root is 
 $skill = "E:\github\awesome-develop-skills\windows-junction-migrator\windows-junction-migrator"
 
 # Preview all built-in mappings (read-only)
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Preset common -TargetRoot "E:\"
 
 # Preview or apply selected software
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Software edge,chrome,codex -TargetRoot "E:\"
 
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Apply -Software edge,chrome,codex -TargetRoot "E:\" -ConfirmApply
 
 # Migrate a custom directory
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Source "C:\Users\flze\SomeApp\Data" -Target "E:\SomeApp\Data"
 ```
 
@@ -89,7 +89,7 @@ Create a UTF-8 file named `my-mappings.json`:
 Relative targets are joined to `-TargetRoot`; absolute targets are used as written.
 
 ```powershell
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -MappingFile ".\my-mappings.json" -TargetRoot "E:\"
 ```
 
@@ -104,7 +104,7 @@ $idea = Get-ChildItem "$env:LOCALAPPDATA\JetBrains" -Directory |
 $source = Join-Path $idea.FullName "caches"
 $target = "E:\intellij-idea\caches"
 
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Source $source -Target $target
 ```
 
@@ -114,15 +114,15 @@ If multiple versions are found, choose the exact directory manually before apply
 
 ```powershell
 # Verify the Junction and target
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Verify -Software edge,chrome
 
 # Remove only the C: Junction and keep E: data
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode RemoveLink -Software edge -ConfirmApply
 
 # Move data back to C: and restore a normal directory
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Restore -Software edge -ConfirmApply
 ```
 

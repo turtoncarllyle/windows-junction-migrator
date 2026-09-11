@@ -53,18 +53,18 @@ Windows 的系统盘容量较小时，浏览器用户数据、开发工具缓存
 $skill = "E:\github\awesome-develop-skills\windows-junction-migrator\windows-junction-migrator"
 
 # 预览全部内置映射（不会修改文件）
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Preset common -TargetRoot "E:\"
 
 # 只预览或执行指定软件
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Software edge,chrome,codex -TargetRoot "E:\"
 
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Apply -Software edge,chrome,codex -TargetRoot "E:\" -ConfirmApply
 
 # 指定目录迁移
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Source "C:\Users\flze\SomeApp\Data" -Target "E:\SomeApp\Data"
 ```
 
@@ -89,7 +89,7 @@ pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
 相对目标路径会拼接到 `-TargetRoot`；绝对目标路径会直接使用。使用以下命令预览或执行：
 
 ```powershell
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -MappingFile ".\my-mappings.json" -TargetRoot "E:\"
 ```
 
@@ -104,7 +104,7 @@ $idea = Get-ChildItem "$env:LOCALAPPDATA\JetBrains" -Directory |
 $source = Join-Path $idea.FullName "caches"
 $target = "E:\intellij-idea\caches"
 
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Preview -Source $source -Target $target
 ```
 
@@ -114,15 +114,15 @@ pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
 
 ```powershell
 # 验证链接和目标
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Verify -Software edge,chrome
 
 # 只删除 C 盘 Junction，保留 E 盘数据
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode RemoveLink -Software edge -ConfirmApply
 
 # 将目标数据迁回 C 盘并恢复普通目录
-pwsh -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
+powershell.exe -NoProfile -File "$skill\scripts\migrate-junctions.ps1" `
   -Mode Restore -Software edge -ConfirmApply
 ```
 

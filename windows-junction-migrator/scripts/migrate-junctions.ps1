@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [ValidateSet('Preview', 'Apply', 'Verify', 'RemoveLink', 'Restore')]
     [string]$Mode = 'Preview',
