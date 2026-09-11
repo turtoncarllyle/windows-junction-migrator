@@ -72,6 +72,14 @@ function Get-ItemSafe {
     return Get-Item -LiteralPath $Path -Force -ErrorAction SilentlyContinue
 }
 
+function Test-IsJunction {
+    param([Parameter(Mandatory = $true)]$Item)
+
+    return ($Item.PSIsContainer -and
+        ($Item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0 -and
+        [string]::Equals([string]$Item.LinkType, 'Junction', [StringComparison]::OrdinalIgnoreCase))
+}
+
 function Get-JunctionTarget {
     param([Parameter(Mandatory = $true)][string]$Path)
 
@@ -79,7 +87,7 @@ function Get-JunctionTarget {
     if ($null -eq $item -or -not $item.PSIsContainer) {
         return $null
     }
-    if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -eq 0) {
+    if (-not (Test-IsJunction -Item $item)) {
         return $null
     }
 
@@ -296,7 +304,7 @@ function Remove-JunctionOnly {
 
     $item = Get-ItemSafe -Path $Path
     if ($null -eq $item) { return 'missing' }
-    if (-not $item.PSIsContainer -or ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -eq 0) {
+    if (-not (Test-IsJunction -Item $item)) {
         throw "Refusing to remove a non-Junction path: $Path"
     }
     [System.IO.Directory]::Delete($Path, $false)
@@ -308,7 +316,10 @@ function Invoke-RemoveLink {
 
     $invalid = @($Items | Where-Object {
             $sourceItem = Get-ItemSafe -Path $_.Source
-            $null -ne $sourceItem -and (($sourceItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -eq 0)
+            if ($null -eq $sourceItem) { return $false }
+            if (-not (Test-IsJunction -Item $sourceItem)) { return $true }
+            $linkTarget = Get-JunctionTarget -Path $_.Source
+            return ($null -eq $linkTarget -or -not (Test-SamePath -Left $linkTarget -Right $_.Target))
         })
     if ($invalid.Count -gt 0) {
         throw "RemoveLink requires Junction source paths: $(($invalid | ForEach-Object { $_.Id }) -join ', ')"
@@ -327,7 +338,9 @@ function Invoke-Restore {
             $sourceItem = Get-ItemSafe -Path $_.Source
             $targetItem = Get-ItemSafe -Path $_.Target
             $null -eq $sourceItem -or $null -eq $targetItem -or
-            ($sourceItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -eq 0
+            -not (Test-IsJunction -Item $sourceItem) -or
+            $null -eq (Get-JunctionTarget -Path $_.Source) -or
+            -not (Test-SamePath -Left (Get-JunctionTarget -Path $_.Source) -Right $_.Target)
         })
     if ($invalid.Count -gt 0) {
         throw "Restore requires an existing Junction and target directory: $(($invalid | ForEach-Object { $_.Id }) -join ', ')"
