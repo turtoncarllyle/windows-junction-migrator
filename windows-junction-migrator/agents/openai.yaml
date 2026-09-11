@@ -1,0 +1,4 @@
+interface:
+  display_name: "Windows Junction Migrator / Windows 目录迁移"
+  short_description: "迁移软件数据到其他磁盘并安全释放 C 盘空间"
+  default_prompt: "使用 $windows-junction-migrator 预览并安全迁移 Windows 软件数据，释放 C 盘空间。"

@@ -1,0 +1,15 @@
+name: Windows tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Run Junction tests
+        shell: pwsh
+        run: pwsh -NoProfile -File .\tests\test_migrate_junctions.ps1

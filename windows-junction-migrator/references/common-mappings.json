@@ -1,0 +1,114 @@
+[
+  {
+    "id": "codex",
+    "nameZh": "Codex",
+    "nameEn": "Codex",
+    "source": "%USERPROFILE%\\.codex",
+    "target": "codex\\.codex"
+  },
+  {
+    "id": "cc-switch",
+    "nameZh": "CC Switch",
+    "nameEn": "CC Switch",
+    "source": "%USERPROFILE%\\.cc-switch",
+    "target": "cc-switch\\.cc-switch"
+  },
+  {
+    "id": "nuget",
+    "nameZh": "NuGet",
+    "nameEn": "NuGet",
+    "source": "%USERPROFILE%\\.nuget",
+    "target": "nuget\\.nuget"
+  },
+  {
+    "id": "workbuddy",
+    "nameZh": "WorkBuddy",
+    "nameEn": "WorkBuddy",
+    "source": "%USERPROFILE%\\.workbuddy",
+    "target": "workbuddy\\.workbuddy"
+  },
+  {
+    "id": "claude",
+    "nameZh": "Claude",
+    "nameEn": "Claude",
+    "source": "%USERPROFILE%\\.claude",
+    "target": "claude\\.claude"
+  },
+  {
+    "id": "gemini",
+    "nameZh": "Gemini",
+    "nameEn": "Gemini",
+    "source": "%USERPROFILE%\\.gemini",
+    "target": "gemini\\.gemini"
+  },
+  {
+    "id": "codebuddy",
+    "nameZh": "CodeBuddy",
+    "nameEn": "CodeBuddy",
+    "source": "%USERPROFILE%\\.codebuddy",
+    "target": "codebuddy\\.codebuddy"
+  },
+  {
+    "id": "codebuddycn",
+    "nameZh": "CodeBuddy CN",
+    "nameEn": "CodeBuddy CN",
+    "source": "%USERPROFILE%\\.codebuddycn",
+    "target": "codebuddycn\\.codebuddycn"
+  },
+  {
+    "id": "trae-cn",
+    "nameZh": "Trae CN",
+    "nameEn": "Trae CN",
+    "source": "%USERPROFILE%\\.trae-cn",
+    "target": "trae-cn\\.trae-cn"
+  },
+  {
+    "id": "zcode",
+    "nameZh": "Zcode",
+    "nameEn": "Zcode",
+    "source": "%USERPROFILE%\\.zcode",
+    "target": "zcode\\.zcode"
+  },
+  {
+    "id": "vscode",
+    "nameZh": "VS Code",
+    "nameEn": "VS Code",
+    "source": "%USERPROFILE%\\.vscode",
+    "target": "vscode\\.vscode"
+  },
+  {
+    "id": "antigravity-ide",
+    "nameZh": "Antigravity IDE",
+    "nameEn": "Antigravity IDE",
+    "source": "%USERPROFILE%\\.antigravity-ide",
+    "target": "antigravity-ide\\.antigravity-ide"
+  },
+  {
+    "id": "cache",
+    "nameZh": "用户缓存",
+    "nameEn": "User cache",
+    "source": "%USERPROFILE%\\.cache",
+    "target": "cache\\.cache"
+  },
+  {
+    "id": "copilot",
+    "nameZh": "GitHub Copilot",
+    "nameEn": "GitHub Copilot",
+    "source": "%USERPROFILE%\\.copilot",
+    "target": "copilot\\.copilot"
+  },
+  {
+    "id": "edge",
+    "nameZh": "Microsoft Edge 用户数据",
+    "nameEn": "Microsoft Edge user data",
+    "source": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data",
+    "target": "edge\\User Data"
+  },
+  {
+    "id": "chrome",
+    "nameZh": "Google Chrome 用户数据",
+    "nameEn": "Google Chrome user data",
+    "source": "%LOCALAPPDATA%\\Google\\Chrome\\User Data",
+    "target": "chrome\\User Data"
+  }
+]
